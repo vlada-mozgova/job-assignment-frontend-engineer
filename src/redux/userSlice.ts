@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { FormValues } from "modules/user/Login";
-import { User } from "modules/user/Profile";
 import { RootState } from "redux/store";
-import { loginRequest } from "redux/api";
+import { loginRequest } from "utils/api/login";
+import { User } from "utils/types";
 
 type UserState = {
   user: User | null;

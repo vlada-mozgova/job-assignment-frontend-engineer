@@ -1,11 +1,3 @@
-export type User = {
-  email: string;
-  token: string;
-  username: string;
-  bio: string;
-  image: string;
-};
-
 export default function Profile() {
   return (
     <>
