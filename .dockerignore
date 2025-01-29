@@ -1,0 +1,14 @@
+# Ignore all files...
+*
+
+# ...except
+!@types
+!src
+!public
+
+!.env
+!nginx.conf
+!package.json
+!package-lock.json
+!yarn.lock
+!tsconfig.json
