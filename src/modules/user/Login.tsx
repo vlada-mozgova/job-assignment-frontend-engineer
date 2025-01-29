@@ -25,7 +25,7 @@ const formFields = [
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch() as (action: AsyncThunkAction<User, FormValues, any>) => Promise<User>;
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const userToken: string | undefined = useAppSelector(selectIsLoggedIn);
   const navigate = useNavigate();
   const {
     register,
@@ -36,16 +36,14 @@ const Login: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    console.log("Dispatching loginUser with data:", data);
     dispatch(loginUser(data));
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
-      console.log("User is logged in, redirecting to /");
+    if (userToken) {
       navigate("/");
     }
-  }, [isLoggedIn]);
+  }, [userToken]);
 
   return (
     <div className="auth-page">

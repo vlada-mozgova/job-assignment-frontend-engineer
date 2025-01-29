@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
 import Register from "./modules/user/Register";
 import Logout from "./modules/user/Logout";
 import Profile from "./modules/user/Profile";
@@ -11,13 +10,8 @@ import Footer from "modules/shared/Footer";
 import Editor from "modules/user/Editor";
 import Login from "modules/user/Login";
 import React from "react";
-import { useAppSelector } from "redux/store";
-import { selectIsLoggedIn, selectUser } from "redux/userSlice";
 
 const App: React.FC = () => {
-  const isLoggedIn = useAppSelector(selectUser);
-  console.log(isLoggedIn);
-
   return (
     <Router>
       <Header />

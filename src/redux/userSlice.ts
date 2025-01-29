@@ -42,7 +42,7 @@ const userSlice = createSlice({
 
 export const { resetUser } = userSlice.actions;
 export const selectUser = (state: RootState): User | null => state.user?.user;
-export const selectIsLoggedIn = (state: RootState): boolean => !!state.user?.user?.token;
+export const selectIsLoggedIn = (state: RootState): string | undefined => state.user?.user?.token;
 
 // Persist configuration
 const persistConfig = {
