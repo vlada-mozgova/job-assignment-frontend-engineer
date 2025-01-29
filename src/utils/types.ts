@@ -1,5 +1,5 @@
 export type Article = {
-  author: Profile;
+  author: ProfileAuthor;
   createdAt: string;
   favoritesCount: number;
   favorited: boolean;
@@ -9,7 +9,7 @@ export type Article = {
   body: string;
 };
 
-export type Profile = {
+export type ProfileAuthor = {
   username: string;
   image: string;
   bio: string;

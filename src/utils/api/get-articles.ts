@@ -1,36 +1,44 @@
 import { BASE_URL } from "utils/constants";
 import { Article } from "utils/types";
+import stringify from "query-string";
 
-export const getFollowedArticles = async (token: string, limit = 20, offset = 0): Promise<Article[]> => {
-  const response = await fetch(`${BASE_URL}/api/articles/feed?limit=${limit}&offset=${offset}`, {
+const fetchArticles = async (url: string, token: string): Promise<Article[]> => {
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Token: ${token}`,
+      Authorization: `Token ${token}`,
     },
   });
 
   if (!response.ok) {
-    throw new Error("Failed to get articles");
+    const errorData = await response.json();
+    const errorMessage = response.status ? response.statusText : errorData.message;
+    throw new Error(`Failed to get articles: ${errorMessage}`);
   }
 
   const data = await response.json();
   return data.articles;
 };
 
-export const getGlobalArticles = async (token: string): Promise<Article[]> => {
-  const response = await fetch(`${BASE_URL}/api/articles`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Token: ${token}`,
-    },
-  });
+export const getFollowedArticles = async (token: string, limit = 20, offset = 0): Promise<Article[]> => {
+  const queryParams = stringify.stringify({ limit, offset });
+  const url = `${BASE_URL}/api/articles/feed?${queryParams}`;
 
-  if (!response.ok) {
-    throw new Error("Failed to get articles");
-  }
+  return fetchArticles(url, token);
+};
 
-  const data = await response.json();
-  return data.articles;
+export const getGlobalArticles = async ({
+  token,
+  author,
+  favorited,
+}: {
+  token: string;
+  author?: string;
+  favorited?: string;
+}): Promise<Article[]> => {
+  const queryParams = stringify.stringify({ author, favorited });
+  const url = `${BASE_URL}/api/articles?${queryParams}`;
+
+  return fetchArticles(url, token);
 };

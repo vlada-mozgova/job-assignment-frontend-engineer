@@ -1,22 +1,23 @@
 import React from "react";
 
-type FeedToggleProps = {
+type ToggleProps = {
   isGlobalFeed: boolean;
   onToggleFeed: (isGlobal: boolean) => void;
+  tabs: string[];
 };
 
-const FeedToggle: React.FC<FeedToggleProps> = ({ isGlobalFeed, onToggleFeed }) => {
+const Toggle: React.FC<ToggleProps> = ({ isGlobalFeed, onToggleFeed, tabs }) => {
   return (
     <div className="feed-toggle">
       <ul className="nav nav-pills outline-active">
         <li className="nav-item">
           <a className={`nav-link ${!isGlobalFeed ? "active" : ""}`} href="#" onClick={() => onToggleFeed(false)}>
-            Your Feed
+            {tabs[0]}
           </a>
         </li>
         <li className="nav-item">
           <a className={`nav-link ${isGlobalFeed ? "active" : ""}`} href="#" onClick={() => onToggleFeed(true)}>
-            Global Feed
+            {tabs[1]}
           </a>
         </li>
       </ul>
@@ -24,4 +25,4 @@ const FeedToggle: React.FC<FeedToggleProps> = ({ isGlobalFeed, onToggleFeed }) =
   );
 };
 
-export default FeedToggle;
+export default Toggle;

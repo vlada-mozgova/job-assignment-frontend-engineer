@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import ArticleList from "modules/articles/ArticleList";
-import FeedToggle from "modules/articles/FeedToggle";
 import Tags from "modules/articles/Tags";
 import Banner from "modules/shared/Banner";
 import { getFollowedArticles, getGlobalArticles } from "utils/api/get-articles";
@@ -8,6 +7,7 @@ import { useAppSelector } from "redux/store";
 import { selectIsLoggedIn } from "redux/userSlice";
 import { Article } from "utils/types";
 import { favoriteArticle } from "utils/api/favorite-article";
+import Toggle from "modules/shared/Toggle";
 
 const HomePage: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -19,7 +19,9 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     if (userToken) {
       const fetchData = async () => {
-        const response = isGlobalFeed ? await getGlobalArticles(userToken) : await getFollowedArticles(userToken);
+        const response = isGlobalFeed
+          ? await getGlobalArticles({ token: userToken })
+          : await getFollowedArticles(userToken);
         setArticles(response);
 
         setLoading(false);
@@ -46,7 +48,7 @@ const HomePage: React.FC = () => {
       <div className="container page">
         <div className="row">
           <div className="col-md-9">
-            <FeedToggle isGlobalFeed={isGlobalFeed} onToggleFeed={handleToggleFeed} />
+            <Toggle isGlobalFeed={isGlobalFeed} onToggleFeed={handleToggleFeed} tabs={["Your Feed", "Global Feed"]} />
             {loading ? (
               <div>Loading articles...</div>
             ) : articles.length === 0 ? (

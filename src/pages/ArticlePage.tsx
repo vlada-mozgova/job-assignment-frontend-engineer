@@ -38,7 +38,7 @@ const ArticlePage: FC = () => {
     setArticle({ ...article, author: res });
   };
 
-  const handleFavoriteActicle = async (slug: string, isFavorited: boolean) => {
+  const handleFavoriteArticle = async (slug: string, isFavorited: boolean) => {
     const res = await favoriteArticle(userToken!, slug, isFavorited);
     setArticle({ ...res });
   };
@@ -61,7 +61,7 @@ const ArticlePage: FC = () => {
         <ArticleActions
           article={article}
           handleFollowAuthor={handleFollowAuthor}
-          handleFavoriteActicle={handleFavoriteActicle}
+          handleFavoriteArticle={handleFavoriteArticle}
         />
         <Comments />
       </div>

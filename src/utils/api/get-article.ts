@@ -14,6 +14,10 @@ export const getArticle = async (token: string, slug: string): Promise<Article> 
     throw new Error("Failed to get article");
   }
 
-  const data = await response.json();
-  return data.article;
+  try {
+    const data = await response.json();
+    return data.article;
+  } catch (error) {
+    throw new Error("Failed to parse response");
+  }
 };

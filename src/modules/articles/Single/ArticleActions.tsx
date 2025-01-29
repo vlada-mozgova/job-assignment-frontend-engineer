@@ -7,45 +7,44 @@ import { selectUser } from "redux/userSlice";
 type ArticleActionsProps = {
   article: Article;
   handleFollowAuthor: (slug: string, isFavorited: boolean) => Promise<void>;
-  handleFavoriteActicle: (slug: string, isFavorited: boolean) => Promise<void>;
+  handleFavoriteArticle: (slug: string, isFavorited: boolean) => Promise<void>;
 };
 
-const ArticleActions: FC<ArticleActionsProps> = ({ article, handleFollowAuthor, handleFavoriteActicle }) => {
+const ArticleActions: FC<ArticleActionsProps> = ({ article, handleFollowAuthor, handleFavoriteArticle }) => {
   const user = useAppSelector(selectUser);
+  const { author, slug, favorited, favoritesCount, createdAt } = article;
+
   return (
     <div className="article-actions">
       <div className="article-meta">
-        <a href={article.author.image}>
-          <img src={article.author.image || authorImage} alt={article.author.username} />
+        <a href={author.image}>
+          <img src={author.image || authorImage} alt={author.username} />
         </a>
         <div className="info">
-          <a href={article.author.image} className="author">
-            {article.author.username}
+          <a href={`/profile/${author.username}`} className="author">
+            {author.username}
           </a>
-          <span className="date">{new Date(article.createdAt).toDateString()}</span>
+          <span className="date">{new Date(createdAt).toDateString()}</span>
         </div>
-        {user?.username != article.author.username && (
+        {user?.username !== author.username && (
           <button
             className="btn btn-sm btn-outline-secondary"
-            onClick={() => handleFollowAuthor(article.author.username, article.author.following)}
+            onClick={() => handleFollowAuthor(author.username, author.following)}
           >
-            {article.author.following ? (
-              <>Followed {article.author.username}</>
+            {author.following ? (
+              <>Followed {author.username}</>
             ) : (
               <>
                 <i className="ion-plus-round" />
-                &nbsp; Follow {article.author.username}
+                &nbsp; Follow {author.username}
               </>
             )}
           </button>
         )}
         &nbsp;
-        <button
-          className="btn btn-sm btn-outline-primary"
-          onClick={() => handleFavoriteActicle(article.slug, article.favorited)}
-        >
+        <button className="btn btn-sm btn-outline-primary" onClick={() => handleFavoriteArticle(slug, favorited)}>
           <i className="ion-heart" />
-          &nbsp; Favorite Post <span className="counter">({article.favoritesCount})</span>
+          &nbsp; Favorite Post <span className="counter">({favoritesCount})</span>
         </button>
       </div>
     </div>

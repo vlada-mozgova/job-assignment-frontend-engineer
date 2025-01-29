@@ -16,7 +16,7 @@ const ArticleBanner: React.FC<ArticleBannerProps> = ({ article }) => {
             <img src={article.author.image || authorImage} alt={article.author.username} />
           </a>
           <div className="info">
-            <a href={article.author.image} className="author">
+            <a href={`/profile/${article.author.username}`} className="author">
               {article.author.username}
             </a>
             <span className="date">{new Date(article.createdAt).toDateString()}</span>
