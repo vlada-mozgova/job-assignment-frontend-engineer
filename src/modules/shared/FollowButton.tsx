@@ -12,7 +12,7 @@ type FollowButtonProps = {
 
 const FollowButton: React.FC<FollowButtonProps> = ({ author, handleFollowAuthor }) => {
   const user = useAppSelector(selectUser);
-
+  //TODO: after implrmenting followers count, update this code to show the followers count of logged in user and not just hide the button
   if (user?.username === author.username) {
     return null;
   }

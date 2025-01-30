@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Article } from "utils/types";
-import authorImage from "assets/images/author.svg";
 import FollowButton from "modules/shared/FollowButton";
 import FavoriteButton from "modules/shared/FavoriteButton";
+import AuthorImage from "modules/shared/AuthorImage";
 
 type ArticleActionsProps = {
   article: Article;
@@ -16,9 +16,7 @@ const ArticleActions: FC<ArticleActionsProps> = ({ article, handleFollowAuthor, 
   return (
     <div className="article-actions">
       <div className="article-meta">
-        <a href={author.image}>
-          <img src={author.image || authorImage} alt={author.username} />
-        </a>
+        <AuthorImage username={article.author.username} image={article.author.image} />
         <div className="info">
           <a href={`/profile/${author.username}`} className="author">
             {author.username}

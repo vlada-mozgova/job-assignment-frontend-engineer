@@ -1,9 +1,7 @@
 import { FC } from "react";
-import authorImage from "assets/images/author.svg";
 import { ProfileAuthor } from "utils/types";
-import { useAppSelector } from "redux/store";
-import { selectUser } from "redux/userSlice";
 import FollowButton from "modules/shared/FollowButton";
+import AuthorImage from "modules/shared/AuthorImage";
 
 type InfoProps = {
   profile: ProfileAuthor;
@@ -16,7 +14,7 @@ const Info: FC<InfoProps> = ({ profile, handleFollowAuthor }) => {
       <div className="container">
         <div className="row">
           <div className="col-xs-12 col-md-10 offset-md-1">
-            <img src={profile.image || authorImage} className="user-img" />
+            <AuthorImage username={profile.username} image={profile.image} />
             <h4>{profile.username}</h4>
             <p>{profile.bio}</p>
 

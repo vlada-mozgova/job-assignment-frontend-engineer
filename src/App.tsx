@@ -12,6 +12,10 @@ import React from "react";
 import ProfilePage from "pages/ProfilePage";
 
 const App: React.FC = () => {
+  //TODO: add more native styles
+  //TODO: add endpoint or update existing endpoints to get followers count for author
+  //TODO: refactor the code to use react-query for fetching data
+  //TODO: components out of task scope: refactor and split on smaller components
   return (
     <Router>
       <Header />

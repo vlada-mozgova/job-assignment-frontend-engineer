@@ -1,5 +1,5 @@
+import AuthorImage from "modules/shared/AuthorImage";
 import React from "react";
-import authorImage from "assets/images/author.svg";
 import { Article } from "utils/types";
 
 type ArticleListProps = {
@@ -18,9 +18,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ loading, articles, handleFavo
       {articles.map(article => (
         <div key={article.slug} className="article-preview">
           <div className="article-meta">
-            <a href={`/profile/${article.author.username}`}>
-              <img src={article.author.image || authorImage} alt={article.author.username} />
-            </a>
+            <AuthorImage username={article.author.username} image={article.author.image} />
             <div className="info">
               <a href={`/profile/${article.author.username}`} className="author">
                 {article.author.username}
