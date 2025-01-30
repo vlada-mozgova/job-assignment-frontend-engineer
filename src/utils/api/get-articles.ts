@@ -1,6 +1,5 @@
 import { BASE_URL } from "utils/constants";
 import { Article } from "utils/types";
-import stringify from "query-string";
 
 const fetchArticles = async (url: string, token: string): Promise<Article[]> => {
   const response = await fetch(url, {
@@ -22,8 +21,8 @@ const fetchArticles = async (url: string, token: string): Promise<Article[]> => 
 };
 
 export const getFollowedArticles = async (token: string, limit = 20, offset = 0): Promise<Article[]> => {
-  const queryParams = stringify.stringify({ limit, offset });
-  const url = `${BASE_URL}/api/articles/feed?${queryParams}`;
+  const params = new URLSearchParams({ limit: limit.toString(), offset: offset.toString() });
+  const url = `${BASE_URL}/api/articles/feed?${params.toString()}`;
 
   return fetchArticles(url, token);
 };
@@ -37,8 +36,10 @@ export const getGlobalArticles = async ({
   author?: string;
   favorited?: string;
 }): Promise<Article[]> => {
-  const queryParams = stringify.stringify({ author, favorited });
-  const url = `${BASE_URL}/api/articles?${queryParams}`;
+  const params = new URLSearchParams();
+  if (author) params.append("author", author);
+  if (favorited) params.append("favorited", favorited);
+  const url = `${BASE_URL}/api/articles?${params.toString()}`;
 
   return fetchArticles(url, token);
 };

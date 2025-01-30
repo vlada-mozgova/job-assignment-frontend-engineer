@@ -1,47 +1,15 @@
-import { useEffect, useState, FC } from "react";
-import { useParams } from "react-router-dom";
-import { Article } from "utils/types";
-import { useAppSelector } from "redux/store";
-import { selectIsLoggedIn } from "redux/userSlice";
-import { getArticle } from "utils/api/get-article";
+import { FC } from "react";
 import ArticleBanner from "modules/articles/Single/ArticleBanner";
 import Comments from "modules/articles/Single/Comments";
 import ArticleActions from "modules/articles/Single/ArticleActions";
-import { followAuthor } from "utils/api/follow-author";
-import { favoriteArticle } from "utils/api/favorite-article";
+import useArticle from "hooks/useArticle";
 
 const ArticlePage: FC = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const [article, setArticle] = useState<Article | null>(null);
-  const userToken = useAppSelector(selectIsLoggedIn);
-
-  useEffect(() => {
-    if (userToken && slug) {
-      const fetchData = async () => {
-        try {
-          const response = await getArticle(userToken, slug);
-          setArticle(response);
-        } catch (error) {
-          console.error("Failed to fetch article:", error);
-        }
-      };
-      fetchData();
-    }
-  }, [userToken, slug]);
+  const { article, handleFavoriteArticle, handleFollowAuthor } = useArticle();
 
   if (!article) {
     return <div>Loading...</div>;
   }
-
-  const handleFollowAuthor = async (username: string, isFavorited: boolean) => {
-    const res = await followAuthor(userToken!, username, isFavorited);
-    setArticle({ ...article, author: res });
-  };
-
-  const handleFavoriteArticle = async (slug: string, isFavorited: boolean) => {
-    const res = await favoriteArticle(userToken!, slug, isFavorited);
-    setArticle({ ...res });
-  };
 
   return (
     <div className="article-page">

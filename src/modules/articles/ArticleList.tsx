@@ -3,12 +3,17 @@ import authorImage from "assets/images/author.svg";
 import { Article } from "utils/types";
 
 type ArticleListProps = {
+  loading: boolean;
   articles: Article[];
-  handleFavoriteActicle: (slug: string, isFavorited: boolean) => void;
+  handleFavoriteArticle: (slug: string, isFavorited: boolean) => void;
 };
 
-const ArticleList: React.FC<ArticleListProps> = ({ articles, handleFavoriteActicle }) => {
-  return (
+const ArticleList: React.FC<ArticleListProps> = ({ loading, articles, handleFavoriteArticle }) => {
+  return loading ? (
+    <div>Loading articles...</div>
+  ) : articles.length === 0 ? (
+    <div>No articles are here... yet.</div>
+  ) : (
     <div>
       {articles.map(article => (
         <div key={article.slug} className="article-preview">
@@ -24,7 +29,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ articles, handleFavoriteActic
             </div>
             <button
               className="btn btn-outline-primary btn-sm pull-xs-right"
-              onClick={() => handleFavoriteActicle(article.slug, article.favorited)}
+              onClick={() => handleFavoriteArticle(article.slug, article.favorited)}
             >
               <i className="ion-heart" /> {article.favoritesCount}
             </button>

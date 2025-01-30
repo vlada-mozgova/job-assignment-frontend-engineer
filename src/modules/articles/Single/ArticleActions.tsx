@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Article } from "utils/types";
 import authorImage from "assets/images/author.svg";
-import { useAppSelector } from "redux/store";
-import { selectUser } from "redux/userSlice";
+import FollowButton from "modules/shared/FollowButton";
+import FavoriteButton from "modules/shared/FavoriteButton";
 
 type ArticleActionsProps = {
   article: Article;
@@ -11,7 +11,6 @@ type ArticleActionsProps = {
 };
 
 const ArticleActions: FC<ArticleActionsProps> = ({ article, handleFollowAuthor, handleFavoriteArticle }) => {
-  const user = useAppSelector(selectUser);
   const { author, slug, favorited, favoritesCount, createdAt } = article;
 
   return (
@@ -26,26 +25,14 @@ const ArticleActions: FC<ArticleActionsProps> = ({ article, handleFollowAuthor, 
           </a>
           <span className="date">{new Date(createdAt).toDateString()}</span>
         </div>
-        {user?.username !== author.username && (
-          <button
-            className="btn btn-sm btn-outline-secondary"
-            onClick={() => handleFollowAuthor(author.username, author.following)}
-          >
-            {author.following ? (
-              <>Followed {author.username}</>
-            ) : (
-              <>
-                <i className="ion-plus-round" />
-                &nbsp; Follow {author.username}
-              </>
-            )}
-          </button>
-        )}
+        <FollowButton author={author} handleFollowAuthor={handleFollowAuthor} />
         &nbsp;
-        <button className="btn btn-sm btn-outline-primary" onClick={() => handleFavoriteArticle(slug, favorited)}>
-          <i className="ion-heart" />
-          &nbsp; Favorite Post <span className="counter">({favoritesCount})</span>
-        </button>
+        <FavoriteButton
+          slug={slug}
+          favorited={favorited}
+          favoritesCount={favoritesCount}
+          handleFavoriteArticle={handleFavoriteArticle}
+        />
       </div>
     </div>
   );

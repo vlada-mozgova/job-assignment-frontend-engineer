@@ -3,6 +3,7 @@ import authorImage from "assets/images/author.svg";
 import { ProfileAuthor } from "utils/types";
 import { useAppSelector } from "redux/store";
 import { selectUser } from "redux/userSlice";
+import FollowButton from "modules/shared/FollowButton";
 
 type InfoProps = {
   profile: ProfileAuthor;
@@ -10,8 +11,6 @@ type InfoProps = {
 };
 
 const Info: FC<InfoProps> = ({ profile, handleFollowAuthor }) => {
-  const user = useAppSelector(selectUser);
-
   return (
     <div className="user-info">
       <div className="container">
@@ -20,21 +19,8 @@ const Info: FC<InfoProps> = ({ profile, handleFollowAuthor }) => {
             <img src={profile.image || authorImage} className="user-img" />
             <h4>{profile.username}</h4>
             <p>{profile.bio}</p>
-            {user?.username != profile.username && (
-              <button
-                className="btn btn-sm btn-outline-secondary action-btn"
-                onClick={() => handleFollowAuthor(profile.username, profile.following)}
-              >
-                {profile.following ? (
-                  <>Followed {profile.username}</>
-                ) : (
-                  <>
-                    <i className="ion-plus-round" />
-                    &nbsp; Follow {profile.username}
-                  </>
-                )}
-              </button>
-            )}
+
+            <FollowButton author={profile} handleFollowAuthor={handleFollowAuthor} />
           </div>
         </div>
       </div>
