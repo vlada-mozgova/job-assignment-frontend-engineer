@@ -1,4 +1,4 @@
-# Assignment for Frontend Engineer job applicants
+# Assignment for Frontend Engineer job applicants (starting instruction in the end)
 
 ## Background
 
@@ -184,3 +184,24 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## Check the assignment
+
+If your yarn version is arguing with node version (optional): 
+
+#### `export YARN_IGNORE_NODE=1`
+
+Install all dependencies:
+
+#### `yarn install`
+
+Start the frontend part:
+
+#### `yarn start`
+
+Start the backend part:
+
+#### `docker-compose up`
+
+You're all done!
